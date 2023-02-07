@@ -9,6 +9,7 @@ import { Product } from '../common/product';
 export class ProductService {
 
   private baseUrl = 'http://localhost:8080/api/products';
+  // private baseUrl = 'http://localhost:8080/api/products?size=100';  // by default, page size is 20 items, this change it to 100 items
 
   constructor(private httpClient: HttpClient) { }
 

@@ -44,12 +44,28 @@ export class ProductService {
     const productUrl = `${this.baseUrl}/${theProductId}`;
     return this.httpClient.get<Product>(productUrl);
   }
+
+  getProductListPaginate(
+    thePage: number,
+    thePageSize: number,
+    theCategoryId: number): Observable<GetResponseProducts> {
+    // need to build URL based on category id, page and size
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}` + `&page=${thePage}&size=${thePageSize}`;
+    return this.httpClient.get<GetResponseProducts>(searchUrl);
+  }
 }
 
 // unwraps the JSON from Spring Data REST _embedded entry
 interface GetResponseProducts {
   _embedded: {
     products: Product[];
+  }
+
+  page: {
+    size: number, // size of the page
+    totalElements: number, // grand total of ALL elements in the database
+    totalPages: number, // total pages available
+    number: number // current page number
   }
 }
 

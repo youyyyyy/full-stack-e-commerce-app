@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 // default path to: http://localhost:8080/api/products
+// Pagination: http://localhost:8080/api/products?page=0&size=10 (0-index)
 @CrossOrigin("http://localhost:4200")  // accepts calls from web browser scripts for this origin
 public interface ProductRepository extends JpaRepository<Product, Long> {
     // spring Data REST automatically exposes endpoint http://localhost:8080/api/products/search/findByCategoryId?id=2

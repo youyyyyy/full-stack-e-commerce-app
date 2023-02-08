@@ -548,6 +548,12 @@ input.au-input.au-input-xl {
 
 .product-box img {
   width: 150px;
+  display: block;
+}
+
+.product-box a {
+  display: block;
+  text-decoration: none;
 }
 
 .items select {
@@ -770,6 +776,10 @@ table.table.table-bordered th {
 
 .detail-section {
   margin-top: 60px
+}
+
+.detail-img {
+  width: 30%;
 }
 
 .detail-img {
@@ -1134,4 +1144,5 @@ footer ul li {
     border: 0;
     padding: 8px 0
   }
+
 }

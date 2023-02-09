@@ -20,6 +20,8 @@ export class ProductListComponent implements OnInit {
   thePageSize: number = 12;
   theTotalElements: number = 0;
 
+  previousKeyword: string = "";
+
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute) { } // the current active route that loaded the component. Useful for accessing route parameters
@@ -42,12 +44,19 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
+    // if we have a different keyword than previous
+    // then set thePageNumber to 1
+    if (this.previousKeyword != theKeyword) {
+      this.thePageNumber = 1;
+    }
+    this.previousKeyword = theKeyword;
+    console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
+
     // now search for the products using keyword
-    this.productService.searchProducts(theKeyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    this.productService.searchProductListPaginate(
+      this.thePageNumber - 1,
+      this.thePageSize,
+      theKeyword).subscribe(this.processResult());
   }
 
   handleListProducts() {
@@ -80,19 +89,21 @@ export class ProductListComponent implements OnInit {
     this.productService.getProductListPaginate(
       this.thePageNumber - 1, // pagination component: 1-based, Spring Data REST: 0-based
       this.thePageSize,
-      this.currentCategoryId).subscribe(
-        data => {
-          this.products = data._embedded.products;
-          this.thePageNumber = data.page.number + 1;
-          this.thePageSize = data.page.size;
-          this.theTotalElements = data.page.totalElements;
-        }
-      )
+      this.currentCategoryId).subscribe(this.processResult());
   }
 
   updatePageSize(pageSize: string) {
     this.thePageSize = +pageSize;
     this.thePageNumber = 1;
     this.listProducts();
+  }
+
+  processResult() {
+    return (data: any) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    }
   }
 }

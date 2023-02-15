@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -46,7 +47,7 @@ public class Product {
     private Date dateCreated;
 
     @Column(name = "last_updated")
-    @CreationTimestamp
+    @UpdateTimestamp
     private Date lastUpdated;
 
     @ManyToOne

@@ -43,3 +43,6 @@ Thumbs.db
 
 # assets
 /src/assets/images
+
+# other
+account.txt

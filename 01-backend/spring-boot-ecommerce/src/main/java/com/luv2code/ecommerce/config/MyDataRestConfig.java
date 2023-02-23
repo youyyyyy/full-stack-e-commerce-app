@@ -1,9 +1,6 @@
 package com.luv2code.ecommerce.config;
 
-import com.luv2code.ecommerce.entity.Country;
-import com.luv2code.ecommerce.entity.Product;
-import com.luv2code.ecommerce.entity.ProductCategory;
-import com.luv2code.ecommerce.entity.State;
+import com.luv2code.ecommerce.entity.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.metamodel.EntityType;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,6 +42,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         // disable HTTP methods for State: PUT, POST, DELETE, PATCH
         disableHttpMethod(State.class, config, theUnsupportedActions);
+
+        // disable HTTP methods for Order: PUT, POST, DELETE, PATCH
+        disableHttpMethod(Order.class, config, theUnsupportedActions);
 
         // call an internal helper method
         exposeIds(config);
